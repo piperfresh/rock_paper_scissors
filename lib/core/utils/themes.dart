@@ -12,8 +12,6 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         color: Color(0XFF04247C),
       ),
-      // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-      //     .copyWith(surface: AppColor.scaffoldBackgroundColor),
       textTheme: textTheme(AppColor.black),
     );
   }
@@ -24,7 +22,6 @@ class AppTheme {
         color: Color(0XFF04247C),
       ),
       textTheme: textTheme(AppColor.white),
-      // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: AppColor.scaffoldBackgroundColor),
     );
   }
 
@@ -34,7 +31,17 @@ class AppTheme {
         color: AppColor.white,
         fontSize: 64.sp,
         fontWeight: FontWeight.w700,
-      )
+        ),
+        bodyMedium: TextStyle(
+          color: AppColor.yellow1,
+          fontSize: 32.sp,
+          fontWeight: FontWeight.w800,
+        ),
+        bodySmall: TextStyle(
+          color: AppColor.white,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+        )
     );
   }
 }

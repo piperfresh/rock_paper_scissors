@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rock_paper_scissors/core/extensions/asset.dart';
 import 'package:rock_paper_scissors/core/extensions/build_context.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
-import 'package:rock_paper_scissors/features/onboarding/onboarding_screen.dart';
+import 'package:rock_paper_scissors/features/onboarding/screens/onboarding_screen.dart';
 
 class RpsSplashScreen extends StatefulWidget {
   const RpsSplashScreen({super.key});
@@ -82,8 +82,10 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
       });
       _bottomController.forward().then(
             (value) {
-              context.push(MaterialPageRoute(builder: (context) => OnboardingScreen(),));
-            },
+          context.push(MaterialPageRoute(
+            builder: (context) => const OnboardingScreen(),
+          ));
+        },
           );
     });
 
@@ -179,31 +181,6 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildAnimatedIcon(
-    Animation<Offset> animation,
-    String iconPath,
-    double screenWidth,
-    double screenHeight,
-    double assetWidth,
-    double assetHeight,
-  ) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(animation.value.dx * screenWidth / 2,
-              animation.value.dy * screenHeight / 2),
-          child: child,
-        );
-      },
-      child: SizedBox(
-        width: assetWidth,
-        height: assetHeight,
-        child: SvgPicture.asset(iconPath),
       ),
     );
   }
