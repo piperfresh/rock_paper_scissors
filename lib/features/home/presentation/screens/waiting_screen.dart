@@ -4,6 +4,7 @@ import 'package:rock_paper_scissors/core/extensions/asset.dart';
 import 'package:rock_paper_scissors/core/extensions/build_context.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
 import 'package:rock_paper_scissors/core/utils/app_color.dart';
+import 'package:rock_paper_scissors/features/home/presentation/screens/fight_screen.dart';
 import 'package:rock_paper_scissors/features/home/presentation/widgets/waiting_rich_text.dart';
 
 class WaitingScreen extends StatelessWidget {
@@ -60,6 +61,36 @@ class WaitingScreen extends StatelessWidget {
               rightText: 'Win',
               leftTextColor: AppColor.lightGreen,
             ),
+            10.sbH,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'if you are ready!',
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: AppColor.white,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                12.sbW,
+                GestureDetector(
+                  onTap: () {
+                    context.push(MaterialPageRoute(builder: (context) {
+                      return const FightScreen();
+                    },));
+                  },
+                  child: Text(
+                    'Start',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: AppColor.yellow2,
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
