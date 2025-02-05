@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_screenutil: ^5.9.3
   flutter_riverpod: ^2.6.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

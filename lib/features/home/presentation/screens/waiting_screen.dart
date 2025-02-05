@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rock_paper_scissors/core/extensions/asset.dart';
 import 'package:rock_paper_scissors/core/extensions/build_context.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
 import 'package:rock_paper_scissors/core/utils/app_color.dart';
+import 'package:rock_paper_scissors/features/home/presentation/providers/score_notifier.dart';
 import 'package:rock_paper_scissors/features/home/presentation/screens/fight_screen.dart';
 import 'package:rock_paper_scissors/features/home/presentation/widgets/waiting_rich_text.dart';
 
-class WaitingScreen extends StatelessWidget {
+class WaitingScreen extends ConsumerWidget {
   const WaitingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scoreData = ref.watch(scoreNotifierProvider);
     return Scaffold(
       backgroundColor: AppColor.primary,
       body: Center(
@@ -25,13 +28,15 @@ class WaitingScreen extends StatelessWidget {
               'Computer',
               style: context.textTheme.bodyMedium,
             ),
-            const WaitingRichText(
-              leftText: '1',
+            WaitingRichText(
+              leftText: scoreData.computerLosses.toString(),
+              // leftText: '1',
               rightText: 'Lose',
               leftTextColor: AppColor.orange1,
             ),
-            const WaitingRichText(
-              leftText: '20',
+            WaitingRichText(
+              leftText: scoreData.computerWins.toString(),
+              // leftText: '20',
               rightText: 'Win',
               leftTextColor: AppColor.lightGreen,
             ),
@@ -51,13 +56,15 @@ class WaitingScreen extends StatelessWidget {
               'Player',
               style: context.textTheme.bodyMedium,
             ),
-            const WaitingRichText(
-              leftText: '1',
+            WaitingRichText(
+              leftText: scoreData.playerLosses.toString(),
+              // leftText: '1',
               rightText: 'Lose',
               leftTextColor: AppColor.orange1,
             ),
-            const WaitingRichText(
-              leftText: '20',
+            WaitingRichText(
+              leftText: scoreData.playerWins.toString(),
+              // leftText:  '1',
               rightText: 'Win',
               leftTextColor: AppColor.lightGreen,
             ),
