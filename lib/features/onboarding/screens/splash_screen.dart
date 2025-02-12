@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rock_paper_scissors/core/extensions/asset.dart';
-import 'package:rock_paper_scissors/core/extensions/build_context.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
+import 'package:rock_paper_scissors/features/home/data/storage/user_storage.dart';
+import 'package:rock_paper_scissors/features/home/presentation/screens/waiting_screen.dart';
 import 'package:rock_paper_scissors/features/onboarding/screens/onboarding_screen.dart';
 
 class RpsSplashScreen extends StatefulWidget {
@@ -24,8 +25,19 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
   late Animation<double> _bottomIconFade;
   bool _showBottomIcon = false;
 
+  String? username;
+
+  void loadUsername() async {
+    final savedUsername = await UserStorage.getUserString();
+    print('This is the saved username $savedUsername');
+    setState(() {
+      username = savedUsername;
+    });
+  }
+
   @override
   void initState() {
+    loadUsername();
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -59,7 +71,6 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
     );
 
     _bottomIconAnimation = Tween(
-      // begin: const Offset(1.5, 0.0),
       begin: const Offset(0.0, 1.0),
       end: const Offset(0.0, 0.0),
     ).animate(
@@ -82,9 +93,19 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
       });
       _bottomController.forward().then(
             (value) {
-          context.push(MaterialPageRoute(
-            builder: (context) => const OnboardingScreen(),
-          ));
+          if (username == '') {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const OnboardingScreen(),
+                ));
+          } else {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WaitingScreen(),
+                ));
+          }
         },
           );
     });
@@ -100,28 +121,17 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
           double screenHeight = constraints.maxHeight;
 
-          double sideSpacing = screenWidth < 400 ? 110.w : 90.w;
-          // double sideSpacing =  90.w;
-
-          double iconSpacing = screenWidth * 0.1; // 10% of screen width
-          double centerIconSize = screenWidth * 0.25; // 25% of screen width
-          double sideIconSize = screenWidth * 0.2; // 20% of screen width
           return Stack(
             alignment: Alignment.center,
             children: [
               Positioned(
                 left: 90.w,
-
-                // left: screenWidth * 0.25,
-                // left: sideSpacing,
                 child: SlideTransition(
                   position: _leftIconAnimation,
                   child: SvgPicture.asset(
@@ -134,8 +144,6 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
               Positioned(
                 right: 88.w,
                 bottom: 380.h,
-                // right: screenWidth * 0.25,
-                // right: sideSpacing,
                 child: SlideTransition(
                   position: _rightIconAnimation,
                   child: SvgPicture.asset(
@@ -147,11 +155,6 @@ class _RpsSplashScreenState extends State<RpsSplashScreen>
               ),
               Positioned(
                 bottom: 350.h,
-                // left: 90.w,
-                // right: 90.w,
-                // bottom:screenHeight * 0.35,
-                // left: sideSpacing,
-                // right: sideSpacing,
                 left: screenWidth * 0.3,
                 right: screenWidth * 0.3,
                 child: SlideTransition(

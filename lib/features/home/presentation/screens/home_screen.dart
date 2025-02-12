@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rock_paper_scissors/core/common/app_button.dart';
 import 'package:rock_paper_scissors/core/extensions/asset.dart';
 import 'package:rock_paper_scissors/core/extensions/build_context.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
 import 'package:rock_paper_scissors/core/utils/app_color.dart';
-import 'package:rock_paper_scissors/core/widgets/app_button.dart';
 import 'package:rock_paper_scissors/features/home/presentation/screens/waiting_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                   ));
                 },
                 icon: '',
-                buttonTitle: 'Find your opponent',
+                buttonTitle: 'Play',
                 buttonColor: AppColor.light,
                 shadowColor: AppColor.deepLight,
                 height: 51.h),

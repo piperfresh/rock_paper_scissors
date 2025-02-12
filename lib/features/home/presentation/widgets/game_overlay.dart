@@ -4,7 +4,6 @@ import 'package:rock_paper_scissors/core/extensions/asset.dart';
 import 'package:rock_paper_scissors/core/extensions/build_context.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
 import 'package:rock_paper_scissors/core/utils/app_color.dart';
-import 'package:rock_paper_scissors/features/home/presentation/screens/home_screen.dart';
 
 class GameOverOverlay extends StatelessWidget {
   final int playerScore;
@@ -68,26 +67,19 @@ class GameOverOverlay extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                      return HomeScreen();
-                    },));
+                    context.pop();
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    //   return const HomeScreen();
+                    // },));
                   },
                   icon: SvgPicture.asset('home'.svg),
                 ),
                 IconButton(
                   onPressed: () {
                     onRestart();
-                    // context.pop();
                   },
                   icon: SvgPicture.asset('restart'.svg),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset('forward'.svg),
-                ),
-                // SvgPicture.asset('home'.svg),
-                // SvgPicture.asset('restart'.svg),
-                // SvgPicture.asset('forward'.svg),
               ],
             ),
             // ElevatedButton(

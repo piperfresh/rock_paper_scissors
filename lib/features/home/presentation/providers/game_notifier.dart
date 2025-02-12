@@ -1,11 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rock_paper_scissors/core/extensions/extension.dart';
-import 'package:rock_paper_scissors/features/home/data/storage/score_manager.dart';
+import 'package:rock_paper_scissors/core/enum.dart';
 import 'package:rock_paper_scissors/features/home/presentation/providers/game_state.dart';
 import 'package:rock_paper_scissors/features/home/presentation/providers/score_notifier.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final gameProvider =
     StateNotifierProvider<GameNotifier, GameState>((ref) => GameNotifier(ref));
@@ -14,17 +12,6 @@ class GameNotifier extends StateNotifier<GameState> {
   GameNotifier(this.ref) : super(GameState());
 
   final Ref ref;
-
-  void saveGameResult() async {
-    if (!state.isGameComplete) return;
-
-    final prefs = await SharedPreferences.getInstance();
-    final playerWon = state.playerScore > state.computerScore;
-    await ScoreManager.saveScore(
-      playerWon: playerWon,
-      prefs: prefs,
-    );
-  }
 
   void makeChoice(Choice playerChoice) async {
     if (state.isGameComplete) return;
@@ -47,7 +34,9 @@ class GameNotifier extends StateNotifier<GameState> {
     }
 
     // Check if game is complete
-    bool isGameComplete = state.currentRound == GameState.totalRounds;
+    bool isGameComplete = playerScore == 2 ||
+        computerScore == 2 ||
+        state.currentRound == GameState.totalRounds;
     int nextRound =
         isGameComplete ? state.currentRound : state.currentRound + 1;
 

@@ -3,16 +3,16 @@ import 'package:rock_paper_scissors/features/home/presentation/providers/score_s
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScoreNotifier extends StateNotifier<ScoreState> {
-  static const String _playerWinKey = 'player_win';
-  static const String _playerLossKey = 'player_Loss';
-  static const String _computerLossKey = 'computer_Loss';
-  static const String _computerWinKey = 'computer_Win';
+  final String _playerWinKey = 'player_win';
+  final String _playerLossKey = 'player_Loss';
+  final String _computerLossKey = 'computer_Loss';
+  final String _computerWinKey = 'computer_Win';
 
   ScoreNotifier() : super(ScoreState()) {
-    _loadScore();
+    loadScore();
   }
 
-  Future<void> _loadScore() async {
+  Future<void> loadScore() async {
     final prefs = await SharedPreferences.getInstance();
     state = ScoreState(
       playerLosses: prefs.getInt(_playerLossKey) ?? 0,

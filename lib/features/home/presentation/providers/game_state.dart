@@ -1,4 +1,4 @@
-import 'package:rock_paper_scissors/core/extensions/extension.dart';
+import 'package:rock_paper_scissors/core/enum.dart';
 
 class GameState {
   Choice? playerChoice;

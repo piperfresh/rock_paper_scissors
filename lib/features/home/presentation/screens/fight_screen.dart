@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rock_paper_scissors/core/extensions/asset.dart';
 import 'package:rock_paper_scissors/core/extensions/build_context.dart';
-import 'package:rock_paper_scissors/core/extensions/extension.dart';
+import 'package:rock_paper_scissors/core/enum.dart';
 import 'package:rock_paper_scissors/core/extensions/size_extension.dart';
 import 'package:rock_paper_scissors/core/utils/app_color.dart';
 import 'package:rock_paper_scissors/features/home/presentation/providers/game_notifier.dart';
@@ -27,6 +27,7 @@ class _FightScreenState extends ConsumerState<FightScreen>
   late Animation<double> _handAnimation;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _slideAnimation;
+  bool showResult = false;
 
   @override
   void initState() {
@@ -82,10 +83,8 @@ class _FightScreenState extends ConsumerState<FightScreen>
         animation: _animationController,
         builder: (context, child) {
           return Transform.scale(
-            // scale: isSelected ? _scaleAnimation.value : 1.0,
             scale: _scaleAnimation.value,
             child: Transform.rotate(
-              // angle: isSelected ? _handAnimation.value : 1.0,
               angle: _handAnimation.value,
               child: SvgPicture.asset(getHandAsset(isPlayer, choice),height: 400.h,),
             ),
@@ -96,6 +95,7 @@ class _FightScreenState extends ConsumerState<FightScreen>
   }
 
   Widget _buildResultText(GameState gameState) {
+    if (!showResult) return const SizedBox.shrink();
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -176,39 +176,27 @@ class _FightScreenState extends ConsumerState<FightScreen>
               'fill'.svg,
             ),
           ),
-          // Positioned(
-          //   left: 16.w,
-          //   top: 300.h,
-          //   child: SizedBox(
-          //     height: 200.h, // Control the height here
-          //     child: VerticalTimerIndicator(
-          //       onTimerComplete: () {
-          //         // if (isGameActive) {
-          //         //   // _randomChoice();
-          //         // }
-          //       },
-          //     ),
-          //   ),
-          // ),
+
           Positioned(
             bottom: 0.h,
             right: 0.w,
             left: 0.w,
             top: 0.h,
             child: Center(
-              child: Text(
-                gameState.gameResult == null
-                    ? 'FIGHT'
-                    : gameState.gameResult!.name.toUpperCase(),
-                style: context.textTheme.bodyMedium?.copyWith(
-                  fontSize: 56.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              // child: Text(
+              //   gameState.gameResult == null
+              //       ? 'FIGHT'
+              //       : gameState.gameResult!.name.toUpperCase(),
+              //   style: context.textTheme.bodyMedium?.copyWith(
+              //     fontSize: 56.sp,
+              //     fontWeight: FontWeight.w400,
+              //   ),
+              // ),
+              child: _buildResultText(gameState),
             ),
           ),
           Positioned(
-            right: 20.w,
+            left: 20.w,
             top: 50.h,
             child: ScoreBoard(
               playerScore: gameState.playerScore,
@@ -216,33 +204,6 @@ class _FightScreenState extends ConsumerState<FightScreen>
               currentRound: gameState.currentRound,
             ),
           ),
-
-          // Positioned(
-          //   right: 20.w,
-          //   top: 50.h,
-          //   child: Center(
-          //     child: Text(
-          //       'Round 1',
-          //       style: context.textTheme.bodySmall?.copyWith(
-          //         fontSize: 24.sp,
-          //         fontWeight: FontWeight.w400,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //     top: 0,
-          //     child: SvgPicture.asset(
-          //       getHandAsset(false, gameState.computerChoice),
-          //       height: 400.h,
-          //     )),
-          // Positioned(
-          //   bottom: 0,
-          //   child: SvgPicture.asset(
-          //     getHandAsset(true, gameState.playerChoice),
-          //     height: 400.h,
-          //   ),
-          // ),
           Positioned(
             top: 0,
             child: _buildAnimatedHand(
@@ -268,7 +229,11 @@ class _FightScreenState extends ConsumerState<FightScreen>
             left: 20.w,
             child: GestureDetector(
               onTap: () {
+                setState(() => showResult = false);
                 ref.read(gameProvider.notifier).makeChoice(Choice.rock);
+                _animationController.forward(from: 0.0).whenComplete(() {
+                  setState(() => showResult = true);
+                });
               },
               child: AnimatedOpacity(
                 opacity: gameState.playerChoice == Choice.rock ? 1.0 : 0.5,
@@ -282,7 +247,11 @@ class _FightScreenState extends ConsumerState<FightScreen>
             right: 20.w,
             child: GestureDetector(
               onTap: () {
+                setState(() => showResult = false);
                 ref.read(gameProvider.notifier).makeChoice(Choice.scissors);
+                _animationController.forward(from: 0.0).whenComplete(() {
+                  setState(() => showResult = true);
+                });
               },
               child: AnimatedOpacity(
                 opacity: gameState.playerChoice == Choice.scissors ? 1.0 : 0.5,
@@ -297,7 +266,11 @@ class _FightScreenState extends ConsumerState<FightScreen>
             left: 0.w,
             child: GestureDetector(
               onTap: () {
+                setState(() => showResult = false);
                 ref.read(gameProvider.notifier).makeChoice(Choice.paper);
+                _animationController.forward(from: 0.0).whenComplete(() {
+                  setState(() => showResult = true);
+                });
               },
               child: AnimatedOpacity(
                 opacity: gameState.playerChoice == Choice.paper ? 1.0 : 0.5,
@@ -312,7 +285,11 @@ class _FightScreenState extends ConsumerState<FightScreen>
             left: 0.w,
             child: GestureDetector(
               onTap: () {
+                setState(() => showResult = false);
                 ref.read(gameProvider.notifier).makeChoice(randomChoice);
+                _animationController.forward(from: 0.0).whenComplete(() {
+                  setState(() => showResult = true);
+                });
               },
               child: AnimatedOpacity(
                   opacity:  0.5,

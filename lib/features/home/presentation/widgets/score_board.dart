@@ -28,7 +28,7 @@ class ScoreBoard extends StatelessWidget {
           Text(
             'Round $currentRound/3',
             style: context.textTheme.bodyMedium?.copyWith(
-              fontSize: 24.sp,
+              fontSize: 15.sp,
               color: Colors.white,
             ),
           ),
@@ -41,34 +41,34 @@ class ScoreBoard extends StatelessWidget {
                   Text(
                     'You',
                     style: context.textTheme.bodyMedium?.copyWith(
-                      fontSize: 20.sp,
+                      fontSize: 15.sp,
                       color: Colors.white,
                     ),
                   ),
                   Text(
                     playerScore.toString(),
                     style: context.textTheme.bodyMedium?.copyWith(
-                      fontSize: 32.sp,
+                      fontSize: 18.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-              SizedBox(width: 40.w),
+              SizedBox(width: 20.w),
               Column(
                 children: [
                   Text(
                     'CPU',
                     style: context.textTheme.bodyMedium?.copyWith(
-                      fontSize: 20.sp,
+                      fontSize: 15.sp,
                       color: Colors.white,
                     ),
                   ),
                   Text(
                     computerScore.toString(),
                     style: context.textTheme.bodyMedium?.copyWith(
-                      fontSize: 32.sp,
+                      fontSize: 18.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
